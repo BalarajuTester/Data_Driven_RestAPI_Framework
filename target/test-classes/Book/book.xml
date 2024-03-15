@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="api">
+
+    <listeners>
+            <listener class-name="com.api.reporting.Setup"/>
+    </listeners>  
+    
+	     <!--  <parameter name="filePath" value="C:\\Users\\BalarajuGone\\eclipse-workspace\\API_Framework\\src\\test\\java\\com\\api\\request\\book\\bookdata.xlsx"/>-->
+	     <parameter name="filePath" value="C:\\Users\\BalarajuGone\\eclipse-workspace\\API_Framework\\src\\test\\resources\\Book\\bookdata.xlsx"/>
+    
+    <test name="book" parallel="false">
+    <classes>
+    <!--<class name="com.api.request.book.Book"/>-->  
+      <class name="com.api.requests.Book2"/> 
+    </classes>
+    </test>
+
+</suite>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="3" passed="3" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2024-03-11T12:25:53 IST" name="api" finished-at="2024-03-11T12:25:57 IST" duration-ms="4635">
+    <groups>
+      <group name="p1">
+        <method signature="Book2.test(com.api.utils.Entity)[pri:0, instance:com.api.requests.Book2@55182842]" name="test" class="com.api.requests.Book2"/>
+      </group> <!-- p1 -->
+    </groups>
+    <test started-at="2024-03-11T12:25:53 IST" name="book" finished-at="2024-03-11T12:25:57 IST" duration-ms="4635">
+      <class name="com.api.requests.Book2">
+        <test-method is-config="true" signature="setPath(org.testng.ITestContext)[pri:0, instance:com.api.requests.Book2@55182842]" started-at="2024-03-11T12:25:53 IST" name="setPath" finished-at="2024-03-11T12:25:53 IST" duration-ms="17" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@21eee94f]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setPath -->
+        <test-method signature="test(com.api.utils.Entity)[pri:0, instance:com.api.requests.Book2@55182842]" started-at="2024-03-11T12:25:54 IST" name="test" description="book details" data-provider="book_data" finished-at="2024-03-11T12:25:56 IST" duration-ms="2122" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[com.api.utils.Entity@2024293c]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test -->
+        <test-method signature="test(com.api.utils.Entity)[pri:0, instance:com.api.requests.Book2@55182842]" started-at="2024-03-11T12:25:56 IST" name="test" description="book details" data-provider="book_data" finished-at="2024-03-11T12:25:57 IST" duration-ms="709" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[com.api.utils.Entity@a50d709]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test -->
+        <test-method signature="test(com.api.utils.Entity)[pri:0, instance:com.api.requests.Book2@55182842]" started-at="2024-03-11T12:25:57 IST" name="test" description="book details" data-provider="book_data" finished-at="2024-03-11T12:25:57 IST" duration-ms="789" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[com.api.utils.Entity@69d45cca]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test -->
+      </class> <!-- com.api.requests.Book2 -->
+    </test> <!-- book -->
+  </suite> <!-- api -->
+</testng-results>

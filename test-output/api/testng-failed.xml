@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [api]">
+  <parameter name="filePath" value="C:\\Users\\BalarajuGone\\eclipse-workspace\\API_Framework\\src\\test\\resources\\Book\\bookdata.xlsx"/>
+  <listeners>
+    <listener class-name="com.api.reporting.Setup"/>
+  </listeners>
+  <test thread-count="5" name="book(failed)">
+    <classes>
+      <class name="com.api.requests.Book2">
+        <methods>
+          <include name="setPath"/>
+          <include name="test" invocation-numbers="0 1 2"/>
+        </methods>
+      </class> <!-- com.api.requests.Book2 -->
+    </classes>
+  </test> <!-- book(failed) -->
+</suite> <!-- Failed suite [api] -->
