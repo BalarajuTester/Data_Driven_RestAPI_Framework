@@ -17,13 +17,11 @@ public class Setup implements ITestListener {
 	static ExtentTest test;
 
 	public void onStart(ITestContext context) {
-		String reportPath = "test-output/extent-report.html";
+		String reportPath = "API Report/extent-report.html";
 
 		extinstance = ExtentReportManager.createInstance(reportPath);
 	}
 	
-	
-
 	public void onFinish(ITestContext context) {
 		extinstance.flush();
 	}
@@ -32,7 +30,7 @@ public class Setup implements ITestListener {
 		Entity entity = (Entity) result.getParameters()[0];
 		// Get the test class name
 		String className = result.getTestClass().getName();
-		test = extinstance.createTest(className + ": " + entity.getTestCaseName());
+		test = extinstance.createTest(className +"<br> TestCaseName: "+ entity.getTestCaseName());
 		extentTest.set(test);
 	}
 	

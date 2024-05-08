@@ -31,7 +31,7 @@ public class RestAPI {
 	
 		
 	//specify the json file path
-	static String jsonfilePath = "C:\\Users\\BalarajuGone\\eclipse-workspace\\API_Framework\\src\\test\\resources\\";
+	static String jsonfilePath = "C:\\Users\\BalarajuGone\\eclipse-workspace\\API_Framework\\src\\test\\resources\\API Resources\\";
 	
 	
 	public static JsonNode executeAPI(Entity entity) throws ClientProtocolException, IOException {
