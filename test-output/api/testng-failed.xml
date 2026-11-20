@@ -6,12 +6,12 @@
   </listeners>
   <test thread-count="5" name="book(failed)">
     <classes>
-      <class name="com.api.requests.Pen">
+      <class name="com.api.requests.Book">
         <methods>
-          <include name="test" invocation-numbers="0"/>
           <include name="setFilePath"/>
+          <include name="test" invocation-numbers="0"/>
         </methods>
-      </class> <!-- com.api.requests.Pen -->
+      </class> <!-- com.api.requests.Book -->
     </classes>
   </test> <!-- book(failed) -->
 </suite> <!-- Failed suite [api] -->

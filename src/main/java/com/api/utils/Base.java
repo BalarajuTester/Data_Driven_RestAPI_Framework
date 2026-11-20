@@ -14,9 +14,10 @@ public class Base {
 	
 	 public  void setFilepath(String filepath) {
 	        DATA_PROVIDE_CSV = filepath;
+	        System.out.println("file issss "+filepath);
 	    }
 	 
-	@DataProvider(name = "book_data", parallel = false)
+	@DataProvider(name = "data", parallel = false)
 	public Iterator<Object[]> getData() {
 
 		// Define a mapping between entity types and their corresponding classes

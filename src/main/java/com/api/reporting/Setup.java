@@ -15,21 +15,50 @@ public class Setup implements ITestListener {
 	private static ExtentReports extinstance;
 	public static ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
 	static ExtentTest test;
+	
+	static {
+        // Ensure Extent report is initialized even when listener isn't invoked (e.g. running directly)
+        if (extinstance == null) {
+            String reportPath = "API Report/extent-report.html";
+            extinstance = ExtentReportManager.createInstance(reportPath);
+
+            // Flush automatically at JVM shutdown (for direct runs)
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                if (extinstance != null) {
+                    extinstance.flush();
+                 }
+            }));
+        }
+    }
+    // Helper to initialize manually if test is run standalone
+    public static void initializeIfRequired(String testName) {
+        if (extentTest.get() == null) {
+             test = extinstance.createTest(testName);
+            extentTest.set(test);
+        }
+    }
 
 	public void onStart(ITestContext context) {
 		String reportPath = "API Report/extent-report.html";
-
-		extinstance = ExtentReportManager.createInstance(reportPath);
+		if (extinstance == null) {
+			extinstance = ExtentReportManager.createInstance(reportPath);
+		}
+		
 	}
 	
 	public void onFinish(ITestContext context) {
-		extinstance.flush();
+		if (extinstance != null) {
+            extinstance.flush();
+        }
 	}
 
 	public void onTestStart(ITestResult result) {
 		Entity entity = (Entity) result.getParameters()[0];
+		
+		
+	
 		// Get the test class name
-		String className = result.getTestClass().getName();
+		String className = result.getMethod().getRealClass().getName();
 		test = extinstance.createTest(className +"<br> TestCaseName: "+ entity.getTestCaseName());
 		extentTest.set(test);
 	}
@@ -57,6 +86,10 @@ public class Setup implements ITestListener {
 			ExtentReportManager.logException(formatedTrac);
 
 		}
+	}
+
+	public static ExtentReports getExtentInstance() {
+	    return extinstance;
 	}
 	
 }

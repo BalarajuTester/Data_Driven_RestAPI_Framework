@@ -7,12 +7,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 public class Assertion {
 
 	private JsonNode response;
+	private JsonNode Assresponsee;
 
-	public Assertion(JsonNode response) {
-		this.response = response;
+	public Assertion(JsonNode Assresponsee) {
+		this.Assresponsee = Assresponsee;
 	}
 
 	public Object element(String str) {
+		response=Assresponsee;
 		String[] comp = null;
 
 		if (str.contains(".") || str.contains("[")) {

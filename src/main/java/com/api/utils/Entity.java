@@ -6,7 +6,7 @@ public class Entity {
 	private String executable;
 	private String endPoint;
 	private String TestRequest;
-	private String TestResource;
+	//private String TestResource;
 	private String httpCode;
 	private int httpStatus;
 	private String bookName;
@@ -32,9 +32,9 @@ public class Entity {
 		return TestRequest;
 	}
 	
-	public String getTestResource() {
+	/*public String getTestResource() {
 		return TestResource;
-	}
+	}*/
 
 	public String getHttpCode() {
 		return httpCode;

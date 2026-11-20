@@ -15,6 +15,7 @@ import org.apache.http.util.EntityUtils;
 import org.testng.Assert;
 
 import com.api.reporting.Report;
+import com.api.reporting.Setup;
 import com.api.utils.Entity;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,14 +28,16 @@ public class RestAPI {
 
 	static JsonObject jsonObject;
 	
-	static JsonNode response = null;
+	static JsonNode response = null;	
 	
 		
-	//specify the json file path
-	static String jsonfilePath = "C:\\Users\\BalarajuGone\\eclipse-workspace\\API_Framework\\src\\test\\resources\\API Resources\\";
-	
 	
 	public static JsonNode executeAPI(Entity entity) throws ClientProtocolException, IOException {
+				
+		String className = getCallerTestClass();
+		
+		// Ensure Extent report initialized (needed if not running via XML suite)
+        Setup.initializeIfRequired(className +"<br> TestCaseName: "+ entity.getTestCaseName());
 
 		if (!(entity.getHttpCode() == null) && entity.getHttpCode().equalsIgnoreCase("get")) {
 			// Create an HTTP client
@@ -51,7 +54,7 @@ public class RestAPI {
 			HttpResponse response = httpClient.execute(httpGet);
 
 			// Assert the status code
-			Assert.assertEquals(response.getStatusLine().getStatusCode(), entity.getHttpStatus());
+			Assert.assertEquals(response.getStatusLine().getStatusCode(), entity.getHttpStatus()," StatusCode is not correct ");
 
 			// get the response in the form of jsonNode
 			JsonNode ResponseBody = getAPIResponseAsjsonNode(response);
@@ -63,7 +66,7 @@ public class RestAPI {
 		} else if (!(entity.getHttpCode() == null) && entity.getHttpCode().equalsIgnoreCase("post")) {
 			
 			// Create the jsonPayload
-			String jsonPayload = JsonFileReader.requestBuilder(jsonfilePath +entity.getTestResource()+"\\"+ entity.getTestRequest());
+			String jsonPayload = entity.getTestRequest();
 
 			// Create an HTTP client
 			HttpClient httpClient = HttpClients.createDefault();
@@ -127,5 +130,17 @@ public class RestAPI {
 		// convert the jsonObject into jsonNode by using objectMapper
 		JsonNode jsonNode = objectMapper.readTree(jsonObject.toString());
 		return jsonNode;
+	}
+	
+	private static String getCallerTestClass() {
+	    try {
+	        org.testng.ITestResult result = org.testng.Reporter.getCurrentTestResult();
+	        if (result != null && result.getTestClass() != null) {
+	            return result.getTestClass().getName(); 
+	        }
+	    } catch (Exception e) {
+	        // ignore
+	    }
+	    return "UnknownClass";
 	}
 }
