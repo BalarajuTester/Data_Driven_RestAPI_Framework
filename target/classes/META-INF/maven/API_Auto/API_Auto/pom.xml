@@ -11,9 +11,17 @@
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>7.6.1</version>
-			<scope>test</scope>
+			<version>7.11.0</version>
+			
 		</dependency>
+		
+		<!-- Source: https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+<dependency>
+    <groupId>io.rest-assured</groupId>
+    <artifactId>rest-assured</artifactId>
+    <version>6.3.0</version>
+    
+</dependency>
 
 		<dependency>
 			<groupId>com.aventstack</groupId>
@@ -86,13 +94,7 @@
 			<version>1.0.42</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
-		<dependency>
-			<groupId>io.rest-assured</groupId>
-			<artifactId>rest-assured</artifactId>
-			<version>5.3.1</version>
-			<scope>test</scope>
-		</dependency>
+	
 
 		<!-- https://mvnrepository.com/artifact/org.skyscreamer/jsonassert -->
 		<dependency>
@@ -108,13 +110,6 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.15.2</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
-		<dependency>
-			<groupId>com.aventstack</groupId>
-			<artifactId>extentreports</artifactId>
-			<version>5.1.0</version>
 		</dependency>
 
 
@@ -138,9 +133,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.14.1</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+				<release>21</release>
+					<!--<source>1.8</source>
+					<target>1.8</target>-->
 				</configuration>
 			</plugin>
 		</plugins>
