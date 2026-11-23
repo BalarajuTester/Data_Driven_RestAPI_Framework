@@ -32,7 +32,7 @@ public class SpreadSheetUtils {
 
 			Sheet sheet = workbook.getSheetAt(index);
 
-			for (int i = 0; i < sheet.getPhysicalNumberOfRows() - 1; i++) {
+			for (int i = 0; i < sheet.getPhysicalNumberOfRows()-1; i++) {
 				Row row = sheet.getRow(0);
 				Cell cell = row.getCell(0); // Assuming column 0 contains entityType
 				if (cell != null) {
@@ -84,7 +84,7 @@ public class SpreadSheetUtils {
 		while (td.hasNext()) {
 			Object[] testData = td.next();
 
-			// checks whether the testData array has at least one element &
+			// checks whether the testData array has atleast one element &
 			// whether the first element of the array is an instance of the Entity class
 			if (testData.length > 0 && testData[0] instanceof Entity) {
 
@@ -98,7 +98,7 @@ public class SpreadSheetUtils {
 		}
 
 		for (Entity entity : entityList) {
-			if (entity.getExecutable().equalsIgnoreCase("y")) {
+			if (entity.getExecutable().equalsIgnoreCase("Y")) {
 				data.add(new Object[] { entity });
 			}
 		}

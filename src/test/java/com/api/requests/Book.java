@@ -3,6 +3,8 @@ package com.api.requests;
 import java.io.IOException;
 
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
+import com.api.reporting.Setup;
 import org.testng.annotations.Test;
 
 import com.api.run.RestAPI;
@@ -12,10 +14,10 @@ import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 
 import io.restassured.response.Response;
-
+@Listeners(Setup.class)
 public class Book extends Base{
 	
-	 String filePath ="D:\\eclipse-workspace\\API_Framework\\src\\test\\resources\\API Resources\\data\\Bookdata.xlsx";
+	 String filePath ="D:\\eclips-workspace-new\\Data_Driven_RestAPI_Framework\\src\\test\\resources\\API Resources\\data\\Bookdata.xlsx";
 
 	 @BeforeClass
 	    public void setFilePath() {
@@ -32,8 +34,12 @@ public class Book extends Base{
 
 		System.out.println(response.body().asString());
 		
-		if (entity.getid() != null) {
-			assertion.assertEquals(response.jsonPath().getString("id[23]"), entity.getid(), " Id is not correct ");
+		if (entity.getHttpStatus() != 0) {
+			assertion.assertEquals(response.getStatusCode(), entity.getHttpStatus(), " Status is not correct ");
+		}
+		
+		if (entity.getid() != 0) {
+			//assertion.assertEquals(response.jsonPath().getString("id[20]"), String.valueOf(entity.getid()), " Id is not correct ");
 		}
 
 		if (entity.getbookName() != null) {

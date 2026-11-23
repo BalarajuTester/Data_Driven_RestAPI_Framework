@@ -3,18 +3,10 @@ package com.api.run;
 import java.io.IOException;
 
 import org.apache.http.client.ClientProtocolException;
-import org.testng.Assert;
 
 import com.api.reporting.Report;
 import com.api.reporting.Setup;
 import com.api.utils.Entity;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 import io.restassured.filter.Filter;
 import io.restassured.filter.FilterContext;
 import io.restassured.response.Response;
@@ -22,27 +14,22 @@ import io.restassured.specification.FilterableRequestSpecification;
 import io.restassured.specification.FilterableResponseSpecification;
 
 import static io.restassured.RestAssured.given;
-import static org.testng.Assert.assertEquals;
 
 
 public class RestAPI {
 
-	static JsonObject jsonObject;
-	
-	static JsonNode response = null;	
-	
-		
-	
 	public static Response executeAPI(Entity entity) throws ClientProtocolException, IOException {
 				
-		String className = getCallerTestClass();
 		Response response = null;
 		
-		// Ensure Extent report initialized (needed if not running via XML suite)
-        Setup.initializeIfRequired(className +"<br> TestCaseName: "+ entity.getTestCaseName());
-
+		if (Setup.extentTest.get() == null) {
+	        throw new IllegalStateException(
+	            "Extent test is not initialized. Check whether Setup listener is registered."
+	        );
+	    }
+		
 		if (!(entity.getHttpCode() == null) && entity.getHttpCode().equalsIgnoreCase("get")) {
-			
+			System.out.println(entity.getid());
 			response = given().filter(reportFilter)
 				   .header("Accept","application/json")
 				   .when()
@@ -50,13 +37,13 @@ public class RestAPI {
 				   .then()
 				   .extract()
 				   .response();
-			
+			System.out.println("line 54"+response.getBody());
 			
 		} else if (!(entity.getHttpCode() == null) && entity.getHttpCode().equalsIgnoreCase("post")) {
 			
 			response = given().filter(reportFilter)
 					   .header("Accept","application/json")
-					   .header("Contect-Type","application/json")
+					   .header("Content-Type","application/json")
 					   .body(entity.getTestRequest())
 					   .when()
 					   .post(entity.getEndPoint())
@@ -64,6 +51,7 @@ public class RestAPI {
 					   .extract()
 					   .response();
 		}else if(!(entity.getHttpCode() == null) && entity.getHttpCode().equalsIgnoreCase("delete")) {
+			System.out.println(entity.getid());
 			response = given().filter(reportFilter)
 					   .header("Accept","application/json")
 					   .when()
@@ -72,7 +60,6 @@ public class RestAPI {
 					   .extract()
 					   .response();
 			
-		}else if(entity.getHttpCode() == null){
 		}else if(!(entity.getHttpCode() == null) && entity.getHttpCode().equalsIgnoreCase("put")) {
 			response = given().filter(reportFilter)
 					.header("Accept","application/json")

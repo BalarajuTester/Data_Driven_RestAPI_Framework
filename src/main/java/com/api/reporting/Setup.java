@@ -1,7 +1,5 @@
 package com.api.reporting;
 
-import java.util.Arrays;
-
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -12,84 +10,95 @@ import com.aventstack.extentreports.ExtentTest;
 
 public class Setup implements ITestListener {
 
-	private static ExtentReports extinstance;
-	public static ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
-	static ExtentTest test;
-	
-	static {
-        // Ensure Extent report is initialized even when listener isn't invoked (e.g. running directly)
-        if (extinstance == null) {
-            String reportPath = "API Report/extent-report.html";
-            extinstance = ExtentReportManager.createInstance(reportPath);
+    private static ExtentReports extinstance;
 
-            // Flush automatically at JVM shutdown (for direct runs)
-            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                if (extinstance != null) {
-                    extinstance.flush();
-                 }
-            }));
-        }
-    }
-    // Helper to initialize manually if test is run standalone
-    public static void initializeIfRequired(String testName) {
-        if (extentTest.get() == null) {
-             test = extinstance.createTest(testName);
-            extentTest.set(test);
-        }
+    public static ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
+
+    static {
+        String reportPath = "API Report/extent-report.html";
+        extinstance = ExtentReportManager.createInstance(reportPath);
     }
 
-	public void onStart(ITestContext context) {
-		String reportPath = "API Report/extent-report.html";
-		if (extinstance == null) {
-			extinstance = ExtentReportManager.createInstance(reportPath);
-		}
-		
-	}
-	
-	public void onFinish(ITestContext context) {
-		if (extinstance != null) {
+    @Override
+    public void onTestStart(ITestResult result) {
+
+        String testName = result.getTestClass().getName();
+     // Split the package/class name and get only the last value
+        String[] parts = testName.split("\\.");
+        testName = parts[parts.length - 1];
+        // Include the DataProvider test-case name, if available
+        if (result.getParameters() != null
+                && result.getParameters().length > 0
+                && result.getParameters()[0] instanceof Entity) {
+
+            Entity entity = (Entity) result.getParameters()[0];
+            testName += "<br>TestCase: " + entity.getTestCaseName();
+        }
+
+        ExtentTest test = extinstance.createTest(testName);
+
+        // Store the same ExtentTest against this TestNG invocation
+        result.setAttribute("extentTest", test);
+        extentTest.set(test);
+    }
+
+    @Override
+    public void onTestSuccess(ITestResult result) {
+
+        ExtentTest test = (ExtentTest) result.getAttribute("extentTest");
+
+        if (test != null) {
+            test.pass("Test Case Passed");
+        }
+
+        extentTest.remove();
+    }
+
+    @Override
+    public void onTestFailure(ITestResult result) {
+
+        ExtentTest test = (ExtentTest) result.getAttribute("extentTest");
+
+        if (test != null) {
+            Throwable error = result.getThrowable();
+
+            if (error != null) {
+                test.fail(error);
+            } else {
+                test.fail("Test Case Failed");
+            }
+        }
+
+        extentTest.remove();
+    }
+
+    @Override
+    public void onTestSkipped(ITestResult result) {
+
+        ExtentTest test = (ExtentTest) result.getAttribute("extentTest");
+
+        if (test != null) {
+            Throwable error = result.getThrowable();
+
+            if (error != null) {
+                test.skip(error);
+            } else {
+                test.skip("Test Case Skipped");
+            }
+        }
+
+        extentTest.remove();
+    }
+
+    @Override
+    public void onFinish(ITestContext context) {
+
+        if (extinstance != null) {
             extinstance.flush();
         }
-	}
+    }
 
-	public void onTestStart(ITestResult result) {
-		Entity entity = (Entity) result.getParameters()[0];
-		
-		
-	
-		// Get the test class name
-		String className = result.getMethod().getRealClass().getName();
-		test = extinstance.createTest(className +"<br> TestCaseName: "+ entity.getTestCaseName());
-		extentTest.set(test);
-	}
-	
-	public void onTestSkipped(ITestResult result) {
-		ExtentReportManager.logWarning(result.getThrowable().getMessage());
-		String stackTrac = Arrays.toString(result.getThrowable().getStackTrace());
-		stackTrac = stackTrac.replaceAll(",", "<br>");
-		String formatedTrac = "<details>\r\n" + "  <summary>Click Here To See Logs</summary>\r\n" + "  "
-				+ stackTrac + "\n" + "</details>";
-
-		ExtentReportManager.logWarning(formatedTrac);
-	}
-
-	public void onTestFailure(ITestResult result) {
-		String fail = result.getThrowable().getMessage();
-		if (!(fail.contains("Cannot"))) {
-			ExtentReportManager.logFailure(fail.replaceAll(":", ":<br>").replaceAll(",", "<br>"));
-
-			String stackTrac = Arrays.toString(result.getThrowable().getStackTrace());
-			stackTrac = stackTrac.replaceAll(",", "<br>");
-			String formatedTrac = "<details>\r\n" + "  <summary>Click Here To See Exception Logs</summary>\r\n" + "  "
-					+ stackTrac + "\n" + "</details>";
-
-			ExtentReportManager.logException(formatedTrac);
-
-		}
-	}
-
-	public static ExtentReports getExtentInstance() {
-	    return extinstance;
-	}
-	
+    public static ExtentReports getExtentInstance() {
+        return extinstance;
+    }
 }

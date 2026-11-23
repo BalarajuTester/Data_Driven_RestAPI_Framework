@@ -6,7 +6,7 @@
       <class name="com.api.requests.Book">
         <methods>
           <include name="setFilePath"/>
-          <include name="test" invocation-numbers="0"/>
+          <include name="test" invocation-numbers="1"/>
         </methods>
       </class> <!-- com.api.requests.Book -->
     </classes>

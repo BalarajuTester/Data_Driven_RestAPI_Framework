@@ -12,7 +12,7 @@ public class Entity {
 	private String bookName;
 	private String bookAuthor;
 	private double bookPrice;
-	private String id;
+	private int id;
 	private String errorMessage;
 
 	
@@ -56,7 +56,7 @@ public class Entity {
 		return bookPrice;
 	}
 
-	public String getid() {
+	public int getid() {
 		return id;
 	}
 
