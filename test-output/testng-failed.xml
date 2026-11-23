@@ -5,8 +5,8 @@
     <classes>
       <class name="com.api.requests.Book">
         <methods>
+          <include name="test" invocation-numbers="0 1"/>
           <include name="setFilePath"/>
-          <include name="test" invocation-numbers="1"/>
         </methods>
       </class> <!-- com.api.requests.Book -->
     </classes>

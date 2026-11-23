@@ -6,6 +6,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import com.api.reporting.Setup;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.api.run.RestAPI;
 import com.api.utils.Base;
@@ -28,12 +29,10 @@ public class Book extends Base{
 	@Test(dataProvider = "data", groups = { "p1" }, description = "book details")
 	public void test(Entity entity) throws StreamReadException, DatabindException, IOException {
 		
-		
-		//Assertion response = new Assertion(RestAPI.executeAPI(entity));
 		Response response = RestAPI.executeAPI(entity);
-
-		System.out.println(response.body().asString());
 		
+	    SoftAssert assertion = new SoftAssert();
+	    
 		if (entity.getHttpStatus() != 0) {
 			assertion.assertEquals(response.getStatusCode(), entity.getHttpStatus(), " Status is not correct ");
 		}
@@ -51,9 +50,9 @@ public class Book extends Base{
 			assertion.assertEquals(response.jsonPath().getString("bookAuthor"), entity.getbookAuthor(),
 					" Book Author name is not correct ");
 		}
-
-		if (entity.getbookPrice() != 0) {
-			assertion.assertEquals(response.jsonPath().getString("bookPrice"), entity.getbookPrice(),
+		System.out.println("Price is "+entity.getbookPrice());
+		if (entity.getbookPrice() != null) {
+			assertion.assertEquals(response.jsonPath().getString("bookPrice[4]"), entity.getbookPrice(),
 					" Book Price is not correct ");
 		}
 		if (entity.geterrorMessage() != null) {

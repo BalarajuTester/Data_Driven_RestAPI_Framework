@@ -11,8 +11,8 @@ public class Entity {
 	private int httpStatus;
 	private String bookName;
 	private String bookAuthor;
-	private double bookPrice;
-	private int id;
+	private Double bookPrice;
+	private Integer id;
 	private String errorMessage;
 
 	
@@ -52,7 +52,7 @@ public class Entity {
 		return bookAuthor;
 	}
 
-	public double getbookPrice() {
+	public Double getbookPrice() {
 		return bookPrice;
 	}
 

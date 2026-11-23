@@ -7,10 +7,7 @@ import org.testng.asserts.SoftAssert;
 
 public class Base {
 	
-	protected SoftAssert assertion = new SoftAssert();;
-	
 	 String DATA_PROVIDE_CSV;
-
 	
 	 public  void setFilepath(String filepath) {
 	        DATA_PROVIDE_CSV = filepath;

@@ -29,7 +29,6 @@ public class RestAPI {
 	    }
 		
 		if (!(entity.getHttpCode() == null) && entity.getHttpCode().equalsIgnoreCase("get")) {
-			System.out.println(entity.getid());
 			response = given().filter(reportFilter)
 				   .header("Accept","application/json")
 				   .when()
@@ -37,7 +36,6 @@ public class RestAPI {
 				   .then()
 				   .extract()
 				   .response();
-			System.out.println("line 54"+response.getBody());
 			
 		} else if (!(entity.getHttpCode() == null) && entity.getHttpCode().equalsIgnoreCase("post")) {
 			
@@ -81,18 +79,6 @@ public class RestAPI {
 		}
 		
 		return response;
-	}
-	
-	private static String getCallerTestClass() {
-	    try {
-	        org.testng.ITestResult result = org.testng.Reporter.getCurrentTestResult();
-	        if (result != null && result.getTestClass() != null) {
-	            return result.getTestClass().getName(); 
-	        }
-	    } catch (Exception e) {
-	        // ignore
-	    }
-	    return "UnknownClass";
 	}
 	
 	private static final Filter reportFilter =(FilterableRequestSpecification request,

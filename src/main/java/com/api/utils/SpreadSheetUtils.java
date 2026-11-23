@@ -53,8 +53,10 @@ public class SpreadSheetUtils {
 																								// contains field names
 							Field field = entityClass.getDeclaredField(fieldName);
 							field.setAccessible(true);
-
-							if (cell1 != null && cell1.getCellType() == CellType.STRING) {
+							if (cell1 == null || cell1.getCellType() == CellType.BLANK) {
+					            field.set(entityInstance, null);
+					        }
+							else if (cell1 != null && cell1.getCellType() == CellType.STRING) {
 								field.set(entityInstance, cell1.getStringCellValue());
 							} else if (cell1 != null && cell1.getCellType() == CellType.NUMERIC) {
 								if (field.getType() == int.class || field.getType() == Integer.class) {
